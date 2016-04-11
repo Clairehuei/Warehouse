@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="green">#1B7E5A</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="yellow">#E08649</color>
+    <color name="windowBackground">#E3E6D8</color>
+    <color name="yellow_disabled">#4dE08649</color>
+    <color name="dark_yellow">#704324</color>
+    <color name="regular_button_bg_disabled">#801B7E5A</color>
+    <color name="regular_button_bg_normal">#1B7E5A</color>
+    <color name="regular_button_bg_pressed">#0D3F2D</color>
+</resources>

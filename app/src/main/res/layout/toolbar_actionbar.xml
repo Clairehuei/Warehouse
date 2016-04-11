@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:toos="http://schemas.android.com/tools"
+    style="@style/HeaderBar"
+    android:id="@+id/toolbar_actionbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize">
+
+    <Button
+        android:id="@+id/toolbarLeftButton"
+        style="@style/HeaderBar.Button"
+        android:layout_alignParentStart="true"
+        toos:ignore="RtlCompat" />
+    <Button
+        android:id="@+id/testButton2"
+        style="@style/HeaderBar.Button"
+        android:layout_alignParentStart="true"
+        toos:ignore="RtlCompat" />
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        style="@style/HeaderBar.Title"
+        toos:text="@string/app_name" />
+
+    <Button
+        android:id="@+id/toolbarRightButton"
+        style="@style/HeaderBar.Button"
+        android:layout_alignParentEnd="true"
+        toos:ignore="RtlCompat" />
+</RelativeLayout>

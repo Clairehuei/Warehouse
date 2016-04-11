@@ -1,6 +1,25 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Warehouse</string>
-
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!--Login-->
+    <string name="account">帳號</string>
+    <string name="password">密碼</string>
+    <string name="keep_account_info">紀錄登入帳號</string>
+    <string name="getpassword">忘記ID或密碼</string>
+    <string name="version_name" translatable="false">v <xliff:g example="0.01" id="version">{version}</xliff:g></string>
+
+    <!--button-->
+    <string name="btn_confirm">確  認</string>
+
+    <!--Alert and progress-->
+    <string name="login_error">帳號或密碼錯誤</string>
+    <string name="get_user_info_error">用戶數據取得失敗,請重新登入</string>
+    <string name="getdata_error">數據取得失敗，請稍後再試</string>
+    <string name="serach_error">查無資料</string>
+    <string name="login_please_wait">登入中…</string>
+    <string name="login_timeout">網路連線超時</string>
+    <string name="no_network">未連接到網路，請檢察網路設定。</string>
+    <string name="get_user_info">取得用户數據…</string>
+
 </resources>
