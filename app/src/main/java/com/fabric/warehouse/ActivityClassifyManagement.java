@@ -8,11 +8,10 @@ import android.os.Handler;
 import com.fabric.warehouse.Listener.OnLoadMoreListener;
 import com.fabric.warehouse.Model.Product;
 import com.fabric.warehouse.adapter.DataAdapter;
-
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.ButterKnife;
 
@@ -20,8 +19,6 @@ import butterknife.ButterKnife;
  * Created by 6193 on 2016/4/12.
  */
 public class ActivityClassifyManagement extends FabricBaseActivity {
-
-//    private Toolbar toolbar;
 
     private TextView tvEmptyView;
     private RecyclerView mRecyclerView;
@@ -42,21 +39,20 @@ public class ActivityClassifyManagement extends FabricBaseActivity {
     public void rcv1(){
         setContentView(R.layout.activity_classify_management1);
 
-        ButterKnife.inject(this);
+        ButterKnife.inject(this);//注入父類元件
 
+        //設定toolbar顯示文字
         setTitle(getString(R.string.commodity_management));
+
+        //顯示返回按鈕
         showBackButton();
 
-//        toolbar = (Toolbar) findViewById(R.id.toolbar);
         tvEmptyView = (TextView) findViewById(R.id.empty_view);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        productList = new ArrayList<Product>();
+        productList = new ArrayList<>();
         handler = new Handler();
-//        if (toolbar != null) {
-//            setSupportActionBar(toolbar);
-//            getSupportActionBar().setTitle("Android Students");
-//        }
 
+        //載入初始資料
         loadData();
 
         // use this setting to improve performance if you know that changes
@@ -79,7 +75,6 @@ public class ActivityClassifyManagement extends FabricBaseActivity {
         if (productList.isEmpty()) {
             mRecyclerView.setVisibility(View.GONE);
             tvEmptyView.setVisibility(View.VISIBLE);
-
         } else {
             mRecyclerView.setVisibility(View.VISIBLE);
             tvEmptyView.setVisibility(View.GONE);
@@ -103,23 +98,24 @@ public class ActivityClassifyManagement extends FabricBaseActivity {
                         int end = start + 20;
 
                         for (int i = start + 1; i <= end; i++) {
-                            productList.add(new Product("Product " + i, "AndroidStudent" + i + "@gmail.com"));
+                            productList.add(new Product("Product " + i, String.valueOf(i+(new Random().nextInt(100)+1))));
                             mAdapter.notifyItemInserted(productList.size());
                         }
                         mAdapter.setLoaded();
                         //or you can add all at once but do not forget to call mAdapter.notifyDataSetChanged();
                     }
                 }, 2000);
-
             }
         });
     }
 
 
-    // load initial data
+    /**
+     * 載入初始資料
+     */
     private void loadData() {
         for (int i = 1; i <= 20; i++) {
-            productList.add(new Product("Product " + i, "androidstudent" + i + "@gmail.com"));
+            productList.add(new Product("Product " + i, String.valueOf(i+(new Random().nextInt(100)+1))));
         }
     }
 

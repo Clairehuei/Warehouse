@@ -32,4 +32,8 @@
     <string name="cancel_sign_out">點錯了不退出</string>
     <string name="commodity_management">商品管理</string>
 
+    <!--list-->
+    <string name="product_name">商品名稱</string>
+    <string name="product_quantity">商品數量</string>
+
 </resources>

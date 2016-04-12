@@ -5,20 +5,20 @@ import java.io.Serializable;
 /**
  * Created by 6193 on 2016/4/12.
  */
-public class Product {
+public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String name;
-
     private String emailId;
+    private String quantity;
 
     public Product() {
 
     }
-    public Product(String name, String emailId) {
+    public Product(String name, String quantity) {
         this.name = name;
-        this.emailId = emailId;
+        this.quantity = quantity;
     }
 
     public String getName() {
@@ -37,5 +37,11 @@ public class Product {
         this.emailId = emailId;
     }
 
+    public String getQuantity() {
+        return quantity;
+    }
 
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
 }

@@ -35,36 +35,30 @@ public class DataAdapter extends RecyclerView.Adapter {
 
 
 
-    public DataAdapter(List<Product> students, RecyclerView recyclerView) {
-        productList = students;
+    public DataAdapter(List<Product> products, RecyclerView recyclerView) {
+        productList = products;
 
         if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
 
-            final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView
-                    .getLayoutManager();
+            final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
 
-            recyclerView
-                    .addOnScrollListener(new RecyclerView.OnScrollListener() {
-                        @Override
-                        public void onScrolled(RecyclerView recyclerView,
-                                               int dx, int dy) {
-                            super.onScrolled(recyclerView, dx, dy);
-
-                            totalItemCount = linearLayoutManager.getItemCount();
-                            lastVisibleItem = linearLayoutManager
-                                    .findLastVisibleItemPosition();
-                            if (!loading
-                                    && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
-                                // End has been reached
-                                // Do something
-                                if (onLoadMoreListener != null) {
-                                    onLoadMoreListener.onLoadMore();
-                                }
-                                loading = true;
-                            }
+                    totalItemCount = linearLayoutManager.getItemCount();
+                    lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+                    if (!loading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                        // End has been reached
+                        // Do something
+                        if (onLoadMoreListener != null) {
+                            onLoadMoreListener.onLoadMore();
                         }
-                    });
+                        loading = true;
+                    }
+                }
+            });
         }
     }
 
@@ -92,13 +86,13 @@ public class DataAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ProductViewHolder) {
 
-            Product singleStudent= productList.get(position);
+            Product singleProduct= productList.get(position);
 
-            ((ProductViewHolder) holder).tvName.setText(singleStudent.getName());
+            ((ProductViewHolder) holder).tvName.setText(singleProduct.getName());
 
-            ((ProductViewHolder) holder).tvEmailId.setText(singleStudent.getEmailId());
+            ((ProductViewHolder) holder).tvQuantity.setText(singleProduct.getQuantity());
 
-            ((ProductViewHolder) holder).product= singleStudent;
+            ((ProductViewHolder) holder).product= singleProduct;
 
         } else {
             ((ProgressViewHolder) holder).progressBar.setIndeterminate(true);
@@ -119,25 +113,22 @@ public class DataAdapter extends RecyclerView.Adapter {
     }
 
 
-    //
+
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         public TextView tvName;
-
-        public TextView tvEmailId;
-
+        public TextView tvQuantity;
         public Product product;
 
         public ProductViewHolder(View v) {
             super(v);
             tvName = (TextView) v.findViewById(R.id.tvName);
-
-            tvEmailId = (TextView) v.findViewById(R.id.tvEmailId);
+            tvQuantity = (TextView) v.findViewById(R.id.tvQuantity);
 
             v.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(v.getContext(),
-                            "OnClick :" + product.getName() + " \n "+product.getEmailId(),
+                            "OnClick :" + product.getName() + " \n "+product.getQuantity(),
                             Toast.LENGTH_SHORT).show();
 
                 }
