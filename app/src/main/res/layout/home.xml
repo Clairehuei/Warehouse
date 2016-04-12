@@ -27,8 +27,6 @@
             android:text="@string/classify"
             app:layout_gravity="center" />
 
-
-
         <Space />
 
         <Button
