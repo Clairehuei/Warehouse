@@ -36,4 +36,7 @@
     <string name="product_name">商品名稱</string>
     <string name="product_quantity">商品數量</string>
 
+    <!--search-->
+    <string name="hint_search_product">輸入要查詢的商品名稱…</string>
+
 </resources>

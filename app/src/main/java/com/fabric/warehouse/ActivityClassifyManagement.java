@@ -3,24 +3,27 @@ package com.fabric.warehouse;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.os.Handler;
 import com.fabric.warehouse.Listener.OnLoadMoreListener;
 import com.fabric.warehouse.Model.Product;
 import com.fabric.warehouse.adapter.DataAdapter;
+import com.google.common.base.Strings;
 
-import android.widget.SearchView;
+
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Created by 6193 on 2016/4/12.
  */
-public class ActivityClassifyManagement extends FabricBaseActivity {
+public class ActivityClassifyManagement extends FabricBaseActivity implements android.support.v7.widget.SearchView.OnQueryTextListener {
 
     private TextView tvEmptyView;
     private RecyclerView mRecyclerView;
@@ -28,7 +31,9 @@ public class ActivityClassifyManagement extends FabricBaseActivity {
     private LinearLayoutManager mLayoutManager;
     private List<Product> productList;
     protected Handler handler;
-    SearchView sv;
+
+    @InjectView(R.id.my_search_view)
+    SearchView searchView;
 
 
     @Override
@@ -51,10 +56,7 @@ public class ActivityClassifyManagement extends FabricBaseActivity {
         showBackButton();
 
         //設定搜尋列
-        sv = (SearchView) this.findViewById(R.id.my_search_view);
-        sv.setIconifiedByDefault(false);
-        sv.setSubmitButtonEnabled(true);
-        sv.setQueryHint("查詢");
+        searchView.setOnQueryTextListener(this);
 
         tvEmptyView = (TextView) findViewById(R.id.empty_view);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -126,6 +128,33 @@ public class ActivityClassifyManagement extends FabricBaseActivity {
         for (int i = 1; i <= 20; i++) {
             productList.add(new Product("Product " + i, String.valueOf(i+(new Random().nextInt(100)+1))));
         }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+//        if (Strings.emptyToNull(newText) == null) {
+//            adapter.updateAdapter(item);
+//            adapter.notifyDataSetChanged();
+//            return true;
+//        }
+//        getFilteredCollectList(newText);
+//        adapter.updateAdapter(queryCollectList);
+//        adapter.notifyDataSetChanged();
+        return true;
+    }
+
+    private void getFilteredCollectList(String newText) {
+//        queryCollectList.clear();
+//        for (ProductItem collect : item) {
+//            if (collect.productName().contains(newText)) {
+//                queryCollectList.add(collect);
+//            }
+//        }
     }
 
 }

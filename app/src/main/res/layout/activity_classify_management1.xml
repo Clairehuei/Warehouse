@@ -3,16 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    xmlns:search_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar_actionbar"
         layout="@layout/toolbar_actionbar" />
 
-    <SearchView
+
+    <android.support.v7.widget.SearchView
+        android:id="@+id/my_search_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/my_search_view" />
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/windowBackground"
+        search_view:iconifiedByDefault="false"
+        search_view:queryBackground="@android:color/white"
+        search_view:queryHint="@string/hint_search_product" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
