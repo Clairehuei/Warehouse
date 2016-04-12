@@ -11,11 +11,6 @@
         style="@style/HeaderBar.Button"
         android:layout_alignParentStart="true"
         toos:ignore="RtlCompat" />
-    <Button
-        android:id="@+id/testButton2"
-        style="@style/HeaderBar.Button"
-        android:layout_alignParentStart="true"
-        toos:ignore="RtlCompat" />
 
     <TextView
         android:id="@+id/toolbar_title"

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.fabric.warehouse.di.ApplicationModule;
 
 import butterknife.InjectView;
+import butterknife.OnClick;
 import butterknife.Optional;
 
 /**
@@ -41,6 +42,12 @@ public abstract class FabricBaseActivity extends AppCompatActivity {
         if (leftButton == null) return;
         leftButton.setText(getString(R.string.btn_back));
         leftButton.setVisibility(View.VISIBLE);
+    }
+
+    @Optional
+    @OnClick(R.id.toolbarLeftButton)
+    void onBackButtonClicked() {
+        onBackPressed();
     }
 
 }

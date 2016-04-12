@@ -1,21 +1,18 @@
 package com.fabric.warehouse;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
+import com.fabric.warehouse.Model.Contract;
+import com.fabric.warehouse.adapter.ContactsAdapter;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * Created by 6193 on 2016/4/12.
  */
 public class ActivityClassifyManagement extends FabricBaseActivity {
-
-    @InjectView(R.id.pager)
-    ViewPager viewPager;
 
 
     @Override
@@ -27,8 +24,10 @@ public class ActivityClassifyManagement extends FabricBaseActivity {
         setTitle(getString(R.string.commodity_management));
         showBackButton();
 
+        RecyclerView rvContacts = (RecyclerView) findViewById(R.id.recyclerView);
+        ContactsAdapter adapter = new ContactsAdapter(Contract.generateSampleList());
+        rvContacts.setAdapter(adapter);
+        rvContacts.setLayoutManager(new LinearLayoutManager(this));
     }
-
-
 
 }
