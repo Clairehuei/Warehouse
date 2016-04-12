@@ -20,9 +20,26 @@
         app:orientation="horizontal"
         app:rowCount="3">
 
+        <Button
+            android:id="@+id/classify"
+            style="@style/MainButton"
+            android:drawableTop="@drawable/btn_category_search_selector"
+            android:text="@string/classify"
+            app:layout_gravity="center" />
+
 
 
         <Space />
+
+        <Button
+            android:id="@+id/sing_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/ic_logout_selector"
+            android:text="@string/sign_out"
+            android:textColor="@color/logout_button_text_color_selector"
+            app:layout_gravity="center|bottom" />
 
 
     </android.support.v7.widget.GridLayout>

@@ -11,6 +11,8 @@
 
     <!--button-->
     <string name="btn_confirm">確  認</string>
+    <string name="btn_back">返回</string>
+    <string name="on_sell">已上架</string>
 
     <!--Alert and progress-->
     <string name="login_error">帳號或密碼錯誤</string>
@@ -21,5 +23,13 @@
     <string name="login_timeout">網路連線超時</string>
     <string name="no_network">未連接到網路，請檢察網路設定。</string>
     <string name="get_user_info">取得用户數據…</string>
+
+    <!--Main menu button-->
+    <string name="classify">分類查詢</string>
+    <string name="sign_out">登出</string>
+    <string name="make_sure_to_sign_out">是否確定退出此次登入</string>
+    <string name="confirm_sign_out">確認退出</string>
+    <string name="cancel_sign_out">點錯了不退出</string>
+    <string name="commodity_management">商品管理</string>
 
 </resources>
