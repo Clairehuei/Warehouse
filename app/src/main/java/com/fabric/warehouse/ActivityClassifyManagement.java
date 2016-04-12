@@ -8,6 +8,8 @@ import android.os.Handler;
 import com.fabric.warehouse.Listener.OnLoadMoreListener;
 import com.fabric.warehouse.Model.Product;
 import com.fabric.warehouse.adapter.DataAdapter;
+
+import android.widget.SearchView;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ public class ActivityClassifyManagement extends FabricBaseActivity {
     private LinearLayoutManager mLayoutManager;
     private List<Product> productList;
     protected Handler handler;
+    SearchView sv;
 
 
     @Override
@@ -46,6 +49,12 @@ public class ActivityClassifyManagement extends FabricBaseActivity {
 
         //顯示返回按鈕
         showBackButton();
+
+        //設定搜尋列
+        sv = (SearchView) this.findViewById(R.id.my_search_view);
+        sv.setIconifiedByDefault(false);
+        sv.setSubmitButtonEnabled(true);
+        sv.setQueryHint("查詢");
 
         tvEmptyView = (TextView) findViewById(R.id.empty_view);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * POJO class for modeling the API response.
- * @author Cloud
+ * @author Allen
  */
 public class ApiResponse {
 

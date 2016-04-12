@@ -9,6 +9,11 @@
         android:id="@+id/toolbar_actionbar"
         layout="@layout/toolbar_actionbar" />
 
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/my_search_view" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"
