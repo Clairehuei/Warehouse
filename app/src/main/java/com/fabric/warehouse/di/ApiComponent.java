@@ -1,6 +1,7 @@
 package com.fabric.warehouse.di;
 
 
+import com.fabric.warehouse.ActivityClassifyManagement;
 import com.fabric.warehouse.MainActivity;
 import com.fabric.warehouse.WarehouseLifecycleHandler;
 
@@ -20,6 +21,8 @@ import dagger.Component;
 public interface ApiComponent {
 
     void inject(MainActivity activity);
+
+    void inject(ActivityClassifyManagement activity);
 
     void inject(WarehouseLifecycleHandler handler);
 

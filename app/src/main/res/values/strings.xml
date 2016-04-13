@@ -38,5 +38,6 @@
 
     <!--search-->
     <string name="hint_search_product">輸入要查詢的商品名稱…</string>
+    <string name="none_search_result">查無資料</string>
 
 </resources>

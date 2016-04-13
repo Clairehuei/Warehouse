@@ -1,6 +1,7 @@
 package com.fabric.warehouse.Api;
 
 import com.fabric.warehouse.Model.UserInfoResponse;
+import com.fabric.warehouse.Model.Wechat;
 
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
@@ -25,5 +26,14 @@ public interface User {
             @Path("version") String version,
             @Field("tokenId") String tokenId,
             @Field("queryUserId") String userId);
+
+
+    @FormUrlEncoded
+    @POST("/cgi-bin/token")
+    Observable<Wechat> getWechat(
+            @Field("grant_type") String grant_type,
+            @Field("appid") String appid,
+            @Field("secret") String secret
+    );
 
 }

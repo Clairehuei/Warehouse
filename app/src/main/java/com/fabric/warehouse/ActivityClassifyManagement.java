@@ -6,10 +6,16 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.os.Handler;
+
+import com.fabric.warehouse.Api.User;
 import com.fabric.warehouse.Listener.OnLoadMoreListener;
 import com.fabric.warehouse.Model.Product;
+import com.fabric.warehouse.Model.Wechat;
 import com.fabric.warehouse.adapter.DataAdapter;
-import com.google.common.base.Strings;
+import com.fabric.warehouse.di.ApiComponent;
+import com.fabric.warehouse.di.ApiModule;
+import com.fabric.warehouse.di.ApplicationModule;
+import com.fabric.warehouse.di.DaggerApiComponent;
 
 
 import android.widget.TextView;
@@ -17,8 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import retrofit.RetrofitError;
+import rx.Observer;
+import rx.android.app.AppObservable;
 
 /**
  * Created by 6193 on 2016/4/12.
@@ -35,20 +46,74 @@ public class ActivityClassifyManagement extends FabricBaseActivity implements an
     @InjectView(R.id.my_search_view)
     SearchView searchView;
 
+    @Inject
+    User user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_classify_management1);
+        ButterKnife.inject(this);//注入父類元件
 
+        ApiComponent apiComponent = DaggerApiComponent.builder()
+                .applicationModule(new ApplicationModule(getApplication()))
+                .apiModule(new ApiModule())
+                .build();
+        apiComponent.inject(this);
+
+        testApi();
         rcv1();
     }
 
 
+    public void testApi(){
+        String grant_type = "client_credential";
+        String appid = "wx9c61ca4d88538922";
+        String secret = "f3aac1609d3a0ced1ff6d54f5157f740";
+
+        AppObservable.bindActivity(this, user.getWechat(
+                grant_type,
+                appid,
+                secret)).subscribe(new Observer<Wechat>() {
+            @Override
+            public void onCompleted() {
+//                runOnUiThread(dialog::dismiss);
+                System.out.println("======onCompleted=====:");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                System.out.println("======onError=====:");
+                if (e instanceof RetrofitError) {
+                    RetrofitError re = ((RetrofitError) e);
+                    if (re.getKind() == RetrofitError.Kind.NETWORK) {
+//                        runOnUiThread(() -> showNetworkErrorDialog(Activity_SearchResults.this));
+                    }
+                }
+//                runOnUiThread(dialog::dismiss);
+            }
+
+            @Override
+            public void onNext(Wechat wechat) {
+//                if (productResponse.hasData()) {
+//                    item.addAll(productResponse.getProductPage().getCollections());
+//                    onScrollListener.setTotalPages(productResponse.getProductPage().getTotalPages());
+//                    adapter.updateAdapter(item);
+//                    runOnUiThread(adapter::notifyDataSetChanged);
+//                }
+                System.out.println("======onNext=====:");
+                System.out.println("======wechat(Errcode)=====:"+wechat.getErrcode());
+                System.out.println("======wechat(Errmsg)=====:"+wechat.getErrmsg());
+            }
+        });
+
+
+
+    }
+
+
     public void rcv1(){
-        setContentView(R.layout.activity_classify_management1);
-
-        ButterKnife.inject(this);//注入父類元件
-
         //設定toolbar顯示文字
         setTitle(getString(R.string.commodity_management));
 

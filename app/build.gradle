@@ -21,7 +21,7 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField "String", "HOST", '"http://202.173.38.84"'
+            buildConfigField "String", "HOST", '"http://api.weixin.qq.com"'
 //            buildConfigField "String", "HOST", '"http://172.20.20.27:8081"'//6193 本機
             buildConfigField "String", "CCE_HOST", '"http://test.cce-online.com.cn"'
             buildConfigField "String", "CCE_PAY_HOST", '"http://202.173.38.84"'
