@@ -1,5 +1,7 @@
 package com.fabric.warehouse;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -48,6 +50,14 @@ public abstract class FabricBaseActivity extends AppCompatActivity {
     @OnClick(R.id.toolbarLeftButton)
     void onBackButtonClicked() {
         onBackPressed();
+    }
+
+
+    public ProgressDialog showLoadingProgressDialog(Context context) {
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage(context.getString(R.string.loading));
+        return progressDialog;
     }
 
 }

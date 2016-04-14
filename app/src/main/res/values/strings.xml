@@ -8,6 +8,7 @@
     <string name="keep_account_info">紀錄登入帳號</string>
     <string name="getpassword">忘記ID或密碼</string>
     <string name="version_name" translatable="false">v <xliff:g example="0.01" id="version">{version}</xliff:g></string>
+    <string name="loading">載入中…</string>
 
     <!--button-->
     <string name="btn_confirm">確  認</string>

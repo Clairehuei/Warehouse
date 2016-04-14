@@ -1,5 +1,6 @@
 package com.fabric.warehouse;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,8 +29,11 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import retrofit.RetrofitError;
+import rx.Observable;
 import rx.Observer;
+import rx.Subscriber;
 import rx.android.app.AppObservable;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by 6193 on 2016/4/12.
@@ -72,44 +76,61 @@ public class ActivityClassifyManagement extends FabricBaseActivity implements an
         String appid = "wx9c61ca4d88538922";
         String secret = "f3aac1609d3a0ced1ff6d54f5157f740";
 
-        AppObservable.bindActivity(this, user.getWechat(
-                grant_type,
-                appid,
-                secret)).subscribe(new Observer<Wechat>() {
-            @Override
-            public void onCompleted() {
-//                runOnUiThread(dialog::dismiss);
-                System.out.println("======onCompleted=====:");
-            }
+        ProgressDialog dialog = showLoadingProgressDialog(this);
+        dialog.show();
 
-            @Override
-            public void onError(Throwable e) {
-                System.out.println("======onError=====:");
-                if (e instanceof RetrofitError) {
-                    RetrofitError re = ((RetrofitError) e);
-                    if (re.getKind() == RetrofitError.Kind.NETWORK) {
+        AppObservable.bindActivity(this, user.getWechat(grant_type, appid, secret))
+                     .subscribeOn(Schedulers.io())
+                     .subscribe(new Observer<Wechat>() {
+                         @Override
+                         public void onCompleted() {
+                             runOnUiThread(dialog::dismiss);
+                             System.out.println("======onCompleted=====:");
+                         }
+
+                         @Override
+                         public void onError(Throwable e) {
+                             System.out.println("======onError=====:");
+                             if (e instanceof RetrofitError) {
+                                 RetrofitError re = ((RetrofitError) e);
+                                 if (re.getKind() == RetrofitError.Kind.NETWORK) {
 //                        runOnUiThread(() -> showNetworkErrorDialog(Activity_SearchResults.this));
-                    }
-                }
-//                runOnUiThread(dialog::dismiss);
-            }
+                                 }
+                             }
+                             runOnUiThread(dialog::dismiss);
+                         }
 
-            @Override
-            public void onNext(Wechat wechat) {
+                         @Override
+                         public void onNext(Wechat wechat) {
 //                if (productResponse.hasData()) {
 //                    item.addAll(productResponse.getProductPage().getCollections());
 //                    onScrollListener.setTotalPages(productResponse.getProductPage().getTotalPages());
 //                    adapter.updateAdapter(item);
 //                    runOnUiThread(adapter::notifyDataSetChanged);
 //                }
-                System.out.println("======onNext=====:");
-                System.out.println("======wechat(Errcode)=====:"+wechat.getErrcode());
-                System.out.println("======wechat(Errmsg)=====:"+wechat.getErrmsg());
+                             System.out.println("======onNext=====:");
+                             System.out.println("======wechat(Errcode)=====:" + wechat.getErrcode());
+                             System.out.println("======wechat(Errmsg)=====:" + wechat.getErrmsg());
+                         }
+                     });
+
+
+
+    }
+
+
+    public void test(){
+        Observable observable = Observable.create(new Observable.OnSubscribe<String>() {
+
+            //當 Observable 被訂閱的時候，OnSubscribe 的 call() 方法會自動被調用
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                subscriber.onNext("Hello");
+                subscriber.onNext("Hi");
+                subscriber.onNext("Aloha");
+                subscriber.onCompleted();
             }
         });
-
-
-
     }
 
 
