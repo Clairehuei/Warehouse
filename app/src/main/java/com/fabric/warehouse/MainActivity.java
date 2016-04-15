@@ -15,6 +15,7 @@ import com.fabric.warehouse.Helper.PreferenceHelper;
 import com.fabric.warehouse.Model.Token;
 import com.fabric.warehouse.Model.UserInfo;
 import com.fabric.warehouse.Model.UserInfoResponse;
+import com.fabric.warehouse.dao.DatabaseDAO;
 import com.fabric.warehouse.di.ApiComponent;
 import com.fabric.warehouse.di.ApiModule;
 import com.fabric.warehouse.di.ApplicationModule;
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     @InjectView(R.id.edit_password)
     EditText editPassword;
 
+    private DatabaseDAO databaseDAO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +71,15 @@ public class MainActivity extends AppCompatActivity {
 //        setVersionName();
 //        checkNewVersion();
 //        setupDb();
+
+
+        // 建立資料庫物件
+        databaseDAO = new DatabaseDAO(context);
+        // 如果資料庫是空的，就建立一些範例資料
+        // 這是為了方便測試用的，完成應用程式以後可以拿掉
+        if (databaseDAO.getCount() == 0) {
+            databaseDAO.sample();
+        }
     }
 
     @Override
