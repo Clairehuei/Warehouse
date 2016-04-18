@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.fabric.warehouse.Helper.MyDBHelper;
+import com.fabric.warehouse.Model.Product;
 import com.fabric.warehouse.Model.instance.Item;
 
 import java.util.ArrayList;
@@ -136,11 +137,44 @@ public class DatabaseDAO {
      */
     public List<Item> getAll() {
         List<Item> result = new ArrayList<>();
-        Cursor cursor = db.query(
-                TABLE_NAME, null, null, null, null, null, null, null);
+        Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null, null);
 
         while (cursor.moveToNext()) {
             result.add(getRecord(cursor));
+        }
+
+        cursor.close();
+        return result;
+    }
+
+
+    /**
+     * 測試初始化查詢資料
+     * @return
+     */
+    public List<Product> initData() {
+        System.out.println("==initData==");
+        List<Product> result = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " limit 0,15 ", null);
+
+        while (cursor.moveToNext()) {
+            result.add(getProductRecord(cursor));
+        }
+
+        cursor.close();
+        return result;
+    }
+
+
+    public List<Product> getMoreData() {
+        System.out.println("==getMoreData==");
+        List<Product> result = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " limit 16,19 ", null);
+
+        while (cursor.moveToNext()) {
+            result.add(getProductRecord(cursor));
         }
 
         cursor.close();
@@ -198,6 +232,17 @@ public class DatabaseDAO {
     }
 
 
+    public Product getProductRecord(Cursor cursor) {
+        // 準備回傳結果用的物件
+        Product result = new Product();
+        result.setName(cursor.getString(2));
+        result.setQuantity(cursor.getString(3));
+
+        // 回傳結果
+        return result;
+    }
+
+
     /**
      * 取得資料數量
      * @return
@@ -210,6 +255,8 @@ public class DatabaseDAO {
             result = cursor.getInt(0);
         }
 
+        cursor.close();
+
         return result;
     }
 
@@ -218,15 +265,56 @@ public class DatabaseDAO {
      * 建立範例資料
      */
     public void sample() {
-        Item item = new Item(0, new Date().getTime(), "關於Android Tutorial的事情.", "Hello content", "","", 0,0,0);
-        Item item2 = new Item(1, new Date().getTime(), "一隻非常可愛的小狗狗!", "她的名字叫「大熱狗」，又叫\n作「奶嘴」，是一隻非常可愛\n的小狗。", "","", 25.04719, 121.516981, 0);
-        Item item3 = new Item(2, new Date().getTime(), "一首非常好聽的音樂！", "Hello content", "","", 0, 0, 0);
-        Item item4 = new Item(3, new Date().getTime(), "儲存在資料庫的資料", "Hello content", "",",", 0, 0, 0);
+//        Item item = new Item(0, new Date().getTime(), "關於Android Tutorial的事情.", "Hello content", "","", 0,0,0);
+//        Item item2 = new Item(1, new Date().getTime(), "一隻非常可愛的小狗狗!", "她的名字叫「大熱狗」，又叫\n作「奶嘴」，是一隻非常可愛\n的小狗。", "","", 25.04719, 121.516981, 0);
+//        Item item3 = new Item(2, new Date().getTime(), "一首非常好聽的音樂！", "Hello content", "","", 0, 0, 0);
+//        Item item4 = new Item(3, new Date().getTime(), "儲存在資料庫的資料", "Hello content", "",",", 0, 0, 0);
 
-        insert(item);
-        insert(item2);
-        insert(item3);
-        insert(item4);
+        Item item01 = new Item(4, new Date().getTime(), "商品01", "101", "",",", 0, 0, 0);
+        Item item02 = new Item(5, new Date().getTime(), "商品02", "102", "",",", 0, 0, 0);
+        Item item03 = new Item(6, new Date().getTime(), "商品03", "103", "",",", 0, 0, 0);
+        Item item04 = new Item(7, new Date().getTime(), "商品04", "104", "",",", 0, 0, 0);
+        Item item05 = new Item(8, new Date().getTime(), "商品05", "105", "",",", 0, 0, 0);
+        Item item06 = new Item(9, new Date().getTime(), "商品06", "106", "",",", 0, 0, 0);
+        Item item07 = new Item(10, new Date().getTime(), "商品07", "107", "",",", 0, 0, 0);
+        Item item08 = new Item(11, new Date().getTime(), "商品08", "108", "",",", 0, 0, 0);
+        Item item09 = new Item(12, new Date().getTime(), "商品09", "109", "",",", 0, 0, 0);
+        Item item10 = new Item(13, new Date().getTime(), "商品10", "110", "",",", 0, 0, 0);
+        Item item11 = new Item(14, new Date().getTime(), "商品11", "111", "",",", 0, 0, 0);
+        Item item12 = new Item(15, new Date().getTime(), "商品12", "112", "",",", 0, 0, 0);
+        Item item13 = new Item(16, new Date().getTime(), "商品13", "113", "",",", 0, 0, 0);
+        Item item14 = new Item(17, new Date().getTime(), "商品14", "114", "",",", 0, 0, 0);
+        Item item15 = new Item(18, new Date().getTime(), "商品15", "115", "",",", 0, 0, 0);
+        Item item16 = new Item(19, new Date().getTime(), "商品16", "116", "",",", 0, 0, 0);
+        Item item17 = new Item(20, new Date().getTime(), "商品17", "117", "",",", 0, 0, 0);
+        Item item18 = new Item(21, new Date().getTime(), "商品18", "118", "",",", 0, 0, 0);
+        Item item19 = new Item(22, new Date().getTime(), "商品19", "119", "",",", 0, 0, 0);
+        Item item20 = new Item(23, new Date().getTime(), "商品20", "120", "",",", 0, 0, 0);
+
+//        insert(item);
+//        insert(item2);
+//        insert(item3);
+//        insert(item4);
+        insert(item01);
+        insert(item02);
+        insert(item03);
+        insert(item04);
+        insert(item05);
+        insert(item06);
+        insert(item07);
+        insert(item08);
+        insert(item09);
+        insert(item10);
+        insert(item11);
+        insert(item12);
+        insert(item13);
+        insert(item14);
+        insert(item15);
+        insert(item16);
+        insert(item17);
+        insert(item18);
+        insert(item19);
+        insert(item20);
     }
 
 }

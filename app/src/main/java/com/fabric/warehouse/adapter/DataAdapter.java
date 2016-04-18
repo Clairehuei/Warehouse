@@ -45,14 +45,24 @@ public class DataAdapter extends RecyclerView.Adapter {
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    System.out.println("[DataAdapter] onScrolled");
                     super.onScrolled(recyclerView, dx, dy);
 
                     totalItemCount = linearLayoutManager.getItemCount();
+                    System.out.println("[DataAdapter] totalItemCount="+totalItemCount);
+
                     lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+                    System.out.println("[DataAdapter] lastVisibleItem="+lastVisibleItem);
+
+                    System.out.println("[DataAdapter] loading="+loading);
+                    System.out.println("[DataAdapter] visibleThreshold="+visibleThreshold);
+
                     if (!loading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                        System.out.println("[DataAdapter] 1111111111111111");
                         // End has been reached
                         // Do something
                         if (onLoadMoreListener != null) {
+                            System.out.println("[DataAdapter] 22222222222222222");
                             onLoadMoreListener.onLoadMore();
                         }
                         loading = true;

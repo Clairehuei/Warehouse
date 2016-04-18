@@ -13,6 +13,7 @@ import com.fabric.warehouse.Listener.OnLoadMoreListener;
 import com.fabric.warehouse.Model.Product;
 import com.fabric.warehouse.Model.Wechat;
 import com.fabric.warehouse.adapter.DataAdapter;
+import com.fabric.warehouse.dao.DatabaseDAO;
 import com.fabric.warehouse.di.ApiComponent;
 import com.fabric.warehouse.di.ApiModule;
 import com.fabric.warehouse.di.ApplicationModule;
@@ -46,6 +47,7 @@ public class ActivityClassifyManagement extends FabricBaseActivity implements an
     private LinearLayoutManager mLayoutManager;
     private List<Product> productList;
     protected Handler handler;
+    private DatabaseDAO databaseDAO;
 
     @InjectView(R.id.my_search_view)
     SearchView searchView;
@@ -66,11 +68,14 @@ public class ActivityClassifyManagement extends FabricBaseActivity implements an
                 .build();
         apiComponent.inject(this);
 
-        testApi();
-        rcv1();
+        //testApi();
+        rcv2();
     }
 
 
+    /**
+     * 測試微信API
+     */
     public void testApi(){
         String grant_type = "client_credential";
         String appid = "wx9c61ca4d88538922";
@@ -180,6 +185,9 @@ public class ActivityClassifyManagement extends FabricBaseActivity implements an
         mAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
+
+                System.out.println("==[rcv1]onLoadMore==");
+
                 //add null , so the adapter will check view_type and show progress bar at bottom
                 productList.add(null);
                 mAdapter.notifyItemInserted(productList.size() - 1);
@@ -187,6 +195,7 @@ public class ActivityClassifyManagement extends FabricBaseActivity implements an
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        System.out.println("==[rcv1]run==");
                         //   remove progress item
                         productList.remove(productList.size() - 1);
                         mAdapter.notifyItemRemoved(productList.size());
@@ -207,6 +216,93 @@ public class ActivityClassifyManagement extends FabricBaseActivity implements an
     }
 
 
+    public void rcv2(){
+        //設定toolbar顯示文字
+        setTitle(getString(R.string.commodity_management));
+
+        //顯示返回按鈕
+        showBackButton();
+
+        //設定搜尋列
+        searchView.setOnQueryTextListener(this);
+
+        tvEmptyView = (TextView) findViewById(R.id.empty_view);
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        productList = new ArrayList<>();
+        handler = new Handler();
+
+        // 建立資料庫物件
+        databaseDAO = new DatabaseDAO(this);
+
+        //載入初始資料
+        loadData2();//databaseDAO.initData()
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
+
+        mLayoutManager = new LinearLayoutManager(this);
+
+        // use a linear layout manager
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        // create an Object for Adapter
+        mAdapter = new DataAdapter(productList, mRecyclerView);
+
+        // set the adapter object to the Recyclerview
+        mRecyclerView.setAdapter(mAdapter);
+        //	 mAdapter.notifyDataSetChanged();
+
+
+        if (productList.isEmpty()) {
+            mRecyclerView.setVisibility(View.GONE);
+            tvEmptyView.setVisibility(View.VISIBLE);
+        } else {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            tvEmptyView.setVisibility(View.GONE);
+        }
+
+        mAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+
+                System.out.println("==[rcv2]onLoadMore==");
+
+                //add null , so the adapter will check view_type and show progress bar at bottom
+                productList.add(null);
+                mAdapter.notifyItemInserted(productList.size() - 1);
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("==[rcv2]run==");
+                        //   remove progress item
+                        productList.remove(productList.size() - 1);
+                        mAdapter.notifyItemRemoved(productList.size());
+//                        //add items one by one
+//                        int start = productList.size();
+//                        int end = start + 20;
+//
+//                        for (int i = start + 1; i <= end; i++) {
+//                            productList.add(new Product("Product " + i, String.valueOf(i+(new Random().nextInt(100)+1))));
+//                            mAdapter.notifyItemInserted(productList.size());
+//                        }
+
+                        mAdapter.notifyItemInserted(productList.size());
+                        productList.addAll(databaseDAO.getMoreData());
+                        mAdapter.notifyDataSetChanged();
+
+                        mAdapter.setLoaded();
+                        //or you can add all at once but do not forget to call mAdapter.notifyDataSetChanged();
+                    }
+                }, 2000);
+
+
+            }
+        });
+    }
+
+
     /**
      * 載入初始資料
      */
@@ -214,6 +310,10 @@ public class ActivityClassifyManagement extends FabricBaseActivity implements an
         for (int i = 1; i <= 20; i++) {
             productList.add(new Product("Product " + i, String.valueOf(i+(new Random().nextInt(100)+1))));
         }
+    }
+
+    private void loadData2() {
+        productList.addAll(databaseDAO.initData());
     }
 
     @Override
